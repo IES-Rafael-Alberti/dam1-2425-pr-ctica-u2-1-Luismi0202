@@ -166,31 +166,38 @@ def main():
     cont_compras = 0
     cont_ventas = 0
     saldo = 0
-    valor,comando= input(">") 
-    comprobar_importe(valor)
-    comprobar_comando(comando)
-    mostrar_mensaje_error
+    encuentra_fin= False
     while not encuentra_fin:
+        valor= input(">")
+        comprobar_importe(valor)
+
+        comprobar_comando(comando)
 
         comando,importe = recuperar_comando_e_importe(linea)
 
         if comando is None or not comprobar_comando(comando):
             mostrar_mensaje_error()
+
         elif comando in ("saldo", "reset", "fin") and importe is not None:
-            
+            mostrar_mensaje_error()
         elif comando == "saldo":
-            
+           mostrar_saldo(saldo,cont_compras,cont_ventas) 
+
         elif comando == "reset":
-            
+            resetear_saldo(saldo,cont_compras,cont_ventas)
+
         elif comando == "fin":
-            
+            encuentra_fin= True
+
         elif importe is None or not comprobar_importe(importe):
-            
+            mostrar_mensaje_error()
         else:
-
             if comando == "compra":
-
+                procesar_compra(saldo,importe)
+                cont_compras +1
             elif comando == "venta":
+                procesar_venta(saldo,importe)
+                cont_ventas +1
 
 
             
